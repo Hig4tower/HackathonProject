@@ -46,21 +46,22 @@ public class WeatherForecastController : ControllerBase
                          "weather_data",
                          "myScribe"));
         var weatherOCR = new WeatherExtension();
-        foreach (var field in prediction.Inference.DocumentPrediction.Fields)
-        {
-            switch (nameof(field.Key).ToLower())
-            {
-                case "summary":
-                    weatherOCR.Summary = field.Value.Values.Select(x => x.Content).ToString();
-                    break;
+        //foreach (var field in prediction.Inference.DocumentPrediction.Fields)
+        //{
+        //    switch (nameof(field.Key).ToLower())
+        //    {
+        //        case "summary":
+        //            weatherOCR.Summary = field.Value.Values.Select(x => x.Content).ToString();
+        //            break;
 
-                case "":
-                    break;
+        //        case "":
+        //            break;
 
-                default:
-                    break;
-            }
-        }
+        //        default:
+        //            break;
+        //    }
+        //}
+        var test = prediction.Inference.DocumentPrediction.Fields;
         return weatherOCR;
     }
 }
