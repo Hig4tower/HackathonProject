@@ -7,19 +7,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  public forecasts?: WeatherForecast[];
+  public forecasts?: WeatherExtension[];
 
   private fileName: string = '';
+
   constructor(private http: HttpClient) {
-    http.get<WeatherForecast[]>('/weatherforecast').subscribe(
+    this.getData();
+  }
+
+  public getData() {
+    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
       (result) => {
-        this.forecasts = result;
+        this.forecasts = result as WeatherExtension[];
       },
       (error) => console.error(error)
     );
   }
-
-  title = 'angularapp';
 
   public async processFile(imageInput: any) {
     const file: Blob = imageInput.files[0];
@@ -27,29 +30,15 @@ export class AppComponent {
     if (file) {
       const formData = new FormData();
       formData.append('file', file, this.fileName);
-      this.http.post('/weatherforecast', formData).subscribe(
+      this.http.post<WeatherExtension>('/weatherforecast', formData).subscribe(
         (resolve) => {
-          console.log(resolve);
+          this.forecasts?.push(resolve);
         },
         (error) => {
           console.log(error);
         }
       );
     }
-  }
-
-  private async fileToByteArray(file: File): Promise<Uint8Array> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result instanceof ArrayBuffer) {
-          resolve(new Uint8Array(reader.result));
-        } else {
-          reject('Failed to read file as an ArrayBuffer');
-        }
-      };
-      reader.readAsArrayBuffer(file);
-    });
   }
 }
 

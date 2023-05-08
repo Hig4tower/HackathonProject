@@ -2,30 +2,52 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-<p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
+<p *ngIf="!forecasts">
+  <em
+    >Loading... Please refresh once the ASP.NET backend has started. See
+    <a href="https://aka.ms/jspsintegrationangular"
+      >https://aka.ms/jspsintegrationangular</a
+    >
+    for more details.</em
+  >
+</p>
 
-<table *ngIf="forecasts">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let forecast of forecasts">
-            <td>{{ forecast.date }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
-        </tr>
-    </tbody>
+<table *ngIf="forecasts" style="width:100%">
+  <thead>
+    <tr>
+      <th>Temp. (C)</th>
+      <th>Temp. (F)</th>
+      <th>Date</th>
+      <th>Humidity</th>
+      <th>day / Night</th>
+      <th>Wind (km/h)</th>
+      <th>Wind (m/h)</th>
+      <th>Wind Direction</th>
+      <th>Precipitation probability</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let forecast of forecasts">
+      <td>{{ forecast.temperatureC }}</td>
+      <td>{{ forecast.temperatureF }}</td>
+      <td>{{ forecast.date }}</td>
+      <td>{{ forecast.humidity }}</td>
+      <td>{{ forecast.dayOrNight }}</td>
+      <td>{{ forecast.windK }}</td>
+      <td>{{ forecast.windM }}</td>
+      <td>{{ forecast.windDir }}</td>
+      <td>{{ forecast.precipitationProbability }}</td>
+      <td>{{ forecast.summary }}</td>
+    </tr>
+  </tbody>
 </table>
 <label class="image-upload-container btn btn-bwm">
-    <span>Select Image</span>
-    <input #imageInput
-           type="file"
-           accept="image/*"
-           (change)="processFile(imageInput)">
-  </label>
+  <span>Select Image</span>
+  <input
+    #imageInput
+    type="file"
+    accept="image/*"
+    (change)="processFile(imageInput)"
+  />
+</label>

@@ -26,9 +26,9 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    public IEnumerable<WeatherExtension> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        return Enumerable.Range(1, 5).Select(index => new WeatherExtension
         {
             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)).ToString(),
             TemperatureC = Random.Shared.Next(-20, 55),
@@ -46,22 +46,46 @@ public class WeatherForecastController : ControllerBase
                          "weather_data",
                          "myScribe"));
         var weatherOCR = new WeatherExtension();
-        //foreach (var field in prediction.Inference.DocumentPrediction.Fields)
-        //{
-        //    switch (nameof(field.Key).ToLower())
-        //    {
-        //        case "summary":
-        //            weatherOCR.Summary = field.Value.Values.Select(x => x.Content).ToString();
-        //            break;
+        foreach (var field in prediction.Inference.DocumentPrediction.Fields)
+        {
+            switch (field.Key)
+            {
+                case "summary":
+                    weatherOCR.Summary = string.Join("", field.Value.Values.Select(x => x.Content + " ")).Trim();
+                    break;
 
-        //        case "":
-        //            break;
+                case "day_of_month":
+                    weatherOCR.Date = string.Join("", field.Value.Values.Select(x => x.Content + " ")).Trim();
+                    break;
 
-        //        default:
-        //            break;
-        //    }
-        //}
-        var test = prediction.Inference.DocumentPrediction.Fields;
+                case "day_or_night":
+                    weatherOCR.DayOrNight = string.Join("", field.Value.Values.Select(x => x.Content + " ")).Trim();
+                    break;
+
+                case "humidity":
+                    weatherOCR.Humidity = int.Parse(field.Value.Values.ToList().FirstOrDefault().Content);
+                    break;
+
+                case "temperature_c":
+                    weatherOCR.TemperatureC = int.Parse(field.Value.Values.ToList().FirstOrDefault().Content);
+                    break;
+
+                case "precipitation_probability":
+                    weatherOCR.PrecipitationProbability = int.Parse(field.Value.Values.ToList().FirstOrDefault().Content);
+                    break;
+
+                case "wind_k":
+                    weatherOCR.WindK = int.Parse(field.Value.Values.ToList().FirstOrDefault().Content);
+                    break;
+
+                case "wind_dir":
+                    weatherOCR.WindDir = string.Join("", field.Value.Values.Select(x => x.Content + " ")).Trim();
+                    break;
+
+                default:
+                    break;
+            }
+        }
         return weatherOCR;
     }
 }
