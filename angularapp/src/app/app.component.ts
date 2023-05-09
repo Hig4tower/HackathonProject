@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public forecasts?: WeatherExtension[];
-
   private fileName: string = '';
 
   constructor(private http: HttpClient) {
