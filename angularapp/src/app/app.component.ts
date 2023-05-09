@@ -39,6 +39,10 @@ export class AppComponent {
       );
     }
   }
+
+  public deleteEntry(forecast: WeatherExtension) {
+    this.forecasts = this.forecasts?.filter(x => x.summary !== forecast.summary);
+  }
 }
 
 interface WeatherForecast {

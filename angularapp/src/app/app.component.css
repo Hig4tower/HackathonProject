@@ -1,3 +1,35 @@
 td {
   text-align: center;
 }
+
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+
+table {
+  padding: 8px 4px;
+  width: 100%;
+  background: linear-gradient(
+      217deg,
+      rgba(255, 0, 0, 0.2),
+      rgba(255, 0, 0, 0) 70.71%
+    ),
+    linear-gradient(127deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 0, 0) 70.71%);
+  border-radius: 4px;
+  box-shadow: 6px 3px 20px 2px rgba(0, 0, 0, 0.3);
+}
+.header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.file-uploader {
+  padding: 8px;
+  margin-bottom: 16px;
+  background: grey;
+  border-radius: 4px;
+  box-shadow: 6px 3px 20px 2px rgba(0, 0, 0, 0.3);
+}

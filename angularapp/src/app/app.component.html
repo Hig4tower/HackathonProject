@@ -1,6 +1,11 @@
 ﻿<h1 id="tableLabel">Weather forecast</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
+<p>
+  Upload a file from
+  <a target="_blank" href="https://weather.com/de-DE/wetter/10tage/l/1dcd504debac9d3cc77ca449c19be882581bae2471114db2c796bd92450ec1b0">Weather.com</a>
+  to add a new entry to the table.
+</p>
 
 <p *ngIf="!forecasts">
   <em
@@ -11,43 +16,48 @@
     for more details.</em
   >
 </p>
-
-<table *ngIf="forecasts" style="width:100%">
-  <thead>
-    <tr>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Date</th>
-      <th>Humidity</th>
-      <th>day / Night</th>
-      <th>Wind (km/h)</th>
-      <th>Wind (m/h)</th>
-      <th>Wind Direction</th>
-      <th>Precipitation probability</th>
-      <th>Summary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.date }}</td>
-      <td>{{ forecast.humidity }}</td>
-      <td>{{ forecast.dayOrNight }}</td>
-      <td>{{ forecast.windK }}</td>
-      <td>{{ forecast.windM }}</td>
-      <td>{{ forecast.windDir }}</td>
-      <td>{{ forecast.precipitationProbability }}</td>
-      <td>{{ forecast.summary }}</td>
-    </tr>
-  </tbody>
-</table>
-<label class="image-upload-container btn btn-bwm">
-  <span>Select Image</span>
+<div class="header">
   <input
-  #imageInput
+    class="file-uploader"
+    #imageInput
     type="file"
     accept="image/*"
     (change)="processFile(imageInput)"
   />
-</label>
+</div>
+<table *ngIf="forecasts" style="width: 100%">
+  <thead>
+    <tr>
+      <th>Temperature</th>
+      <th>Date</th>
+      <th>Humidity</th>
+      <th>day / Night</th>
+      <th>Wind speed</th>
+      <th>Wind direction</th>
+      <th>Precipitation probability</th>
+      <th>Summary</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let forecast of forecasts">
+      <td>{{ forecast.temperatureC }}°C / {{ forecast.temperatureF }}°F</td>
+      <td>{{ forecast.date }}</td>
+      <td>{{ forecast.humidity }}%</td>
+      <td>{{ forecast.dayOrNight }}</td>
+      <td>{{ forecast.windK }}km/h / {{ forecast.windM }}M/h</td>
+      <td>{{ forecast.windDir }}</td>
+      <td>{{ forecast.precipitationProbability }}%</td>
+      <td>{{ forecast.summary }}</td>
+      <td>
+        <button
+          title="delete forecast"
+          style="cursor: pointer"
+          (click)="deleteEntry(forecast)"
+        >
+          <span class="material-icons red">delete</span>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
